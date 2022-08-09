@@ -97,7 +97,12 @@ submitBtn?.addEventListener('click', () =>{
      country.value = ""
      population.value = ""
 
-     displayCities(cityInfoArray);
+     //displayCities(cityInfoArray);
+     console.log(cityInfoArray)
+     
+     setLocalStorage(cityInfoArray, "cityInfo");
+     displayCities(getLocalStorage("cityInfo"));
+     console.log(getLocalStorage("cityInfo"))
 
 })
 
@@ -122,12 +127,28 @@ searchBtn?.addEventListener('click', ()=>{
    
     console.log(searchResultArray)
     //displaySearchResult();
-    displayCities(searchResultArray)
+    setLocalStorage(searchResultArray, "cityInfo")
+    displayCities(getLocalStorage("cityInfo"))
     searchText.value = ""
 
 
 })
 
+export const setLocalStorage = (data : CityInfo[], tag: string) =>{
+    localStorage.setItem(tag, JSON.stringify(data))
+
+}
+
+export const getLocalStorage = (tag : string) =>{
+         return  JSON.parse(localStorage.getItem(tag)!);
+
+}
 
 
+if(localStorage.length !==0){
+    
+   displayCities(getLocalStorage("cityInfo"));
 
+}
+
+console.log(localStorage)

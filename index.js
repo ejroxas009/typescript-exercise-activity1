@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.displayCities = void 0;
+exports.getLocalStorage = exports.setLocalStorage = exports.displayCities = void 0;
 let cityName = document.getElementById("city_name");
 let country = document.getElementById("country");
 let population = document.getElementById("population");
@@ -72,7 +72,11 @@ submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener
     cityName.value = "";
     country.value = "";
     population.value = "";
-    (0, exports.displayCities)(cityInfoArray);
+    //displayCities(cityInfoArray);
+    console.log(cityInfoArray);
+    (0, exports.setLocalStorage)(cityInfoArray, "cityInfo");
+    (0, exports.displayCities)((0, exports.getLocalStorage)("cityInfo"));
+    console.log((0, exports.getLocalStorage)("cityInfo"));
 });
 searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', () => {
     searchResultArray = cityInfoArray.filter((data) => {
@@ -92,6 +96,19 @@ searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener
     });
     console.log(searchResultArray);
     //displaySearchResult();
-    (0, exports.displayCities)(searchResultArray);
+    (0, exports.setLocalStorage)(searchResultArray, "cityInfo");
+    (0, exports.displayCities)((0, exports.getLocalStorage)("cityInfo"));
     searchText.value = "";
 });
+const setLocalStorage = (data, tag) => {
+    localStorage.setItem(tag, JSON.stringify(data));
+};
+exports.setLocalStorage = setLocalStorage;
+const getLocalStorage = (tag) => {
+    return JSON.parse(localStorage.getItem(tag));
+};
+exports.getLocalStorage = getLocalStorage;
+if (localStorage.length !== 0) {
+    (0, exports.displayCities)((0, exports.getLocalStorage)("cityInfo"));
+}
+console.log(localStorage);
